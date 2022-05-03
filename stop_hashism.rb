@@ -106,15 +106,3 @@ end
 if $0 == __FILE__
   main
 end
-
-
-# Example data for
-#
-#`git cat-file commit HEAD`
-#
-#
-#tree f570057985ff13a02140d4532892e3178bdce43b
-#author Felix Wolfsteller <felix.wolfsteller@gmail.com> 1649669622 +0200
-#committer Felix Wolfsteller <felix.wolfsteller@gmail.com> 1649669622 +0200
-#
-#initial commit
