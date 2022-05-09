@@ -76,8 +76,14 @@ class GitCommitData
 end
 
 def main
+  if ARGV.length == 0
+    STDERR.puts "Call with argument(s)! '#{$PROGRAM_NAME} wished-hash1 wished-hash2 ...'"
+    exit 1
+  end
+
   data = GitCommitData.new(`git cat-file commit HEAD`)
-  wish = ARGV[0] || (STDERR.puts "Call with argument! '#{$PROGRAM_NAME} wished-hash'" ; exit 1)
+  # starts with any of the given arguments
+  wish = Regexp.new ARGV.map{|a| "^(%s)" % a}.join("|") 
   
   puts data.template
   
@@ -85,7 +91,7 @@ def main
     (a_offset..(MAX_MINUTES*60+1)).each do |c_offset|
       data.author_timestamp = data.author_timestamp + a_offset
       data.committer_timestamp = data.committer_timestamp + c_offset
-      if data.to_commit_hash.start_with? wish
+      if data.to_commit_hash =~ wish
         puts "Found"
         puts data
         puts data.to_commit_hash
